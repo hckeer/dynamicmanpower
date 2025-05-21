@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Photo Uploader</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Base Styles */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f7f9fc;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    /* Upload Form Box */
+    .upload-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
+
+    form input[type="file"],
+    form input[type="text"],
+    form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+
+    form button {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #357ABD;
+    }
+
+    /* Gallery Styles */
+    #gallery {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1000px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 1rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin-top: 0.8rem;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #666;
+    }
+    
+
+    @media (max-width: 500px) {
+      .upload-box {
+        padding: 1.5rem;
+      }
+
+      form button {
+        font-size: 0.9rem;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="upload-box">
+    <h2>Upload Photo</h2>
+    <form action="/api/upload" method="post"  id="uploadForm"  enctype="multipart/form-data">
+      <input type="file" id="photo" name = "profileImage" accept="image/*" required><br><br>
+      <input type="text" id="title" name = "title"placeholder="Title" required><br><br>
+      <textarea id="description"  name="description" placeholder="Description" required></textarea><br><br>
+      <button type="submit">Upload</button>
+    </form>
+
+
+  </div>
+  <div class="upload-box">
+    <!-- Your upload form here -->
+  </div>
+
+  <h2>Gallery</h2>
+
+  </div>
+
+  <div id="gallery"></div>
+
+  <script>
+    document.getElementById("uploadForm").addEventListener("submit", async function(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  const formData = new FormData(this);
+  const response = await fetch('/api/upload', {
+    method: 'POST',
+    body: formData
+  });
+
+  if (response.ok) {
+    window.location.href = '/index.html'; // Redirect after successful upload
+  } else {
+    alert('Upload failed!');
+  }
+});
+    window.addEventListener('DOMContentLoaded', () => {
+  fetchPosts();
+});
+
+function fetchPosts() {
+  fetch('/api/posts')
+    .then(res => res.json())
+    .then(posts => {
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = ''; // clear previous content
+
+      posts.forEach(post => {
+        const postElement = document.createElement('div');
+        postElement.className = 'post';
+
+        postElement.innerHTML = `
+          <img src="${post.photo}" alt="${post.title}" width="200">
+          <h3>${post.title}</h3>
+          <p>${post.description}</p>
+        `;
+
+        gallery.appendChild(postElement);
+      });
+    })
+    .catch(err => {
+      console.error('Error loading posts:', err);
+    });
+}
+
+  </script>
+</body>
+</html>

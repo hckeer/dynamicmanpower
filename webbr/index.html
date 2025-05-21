@@ -1,0 +1,491 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Manpower</title>
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Arial', sans-serif;
+                max-width: 100%
+            }
+            html, body {
+    width: 100%;
+    position: relative;
+}
+  body {
+    
+    background: #f7f9fc;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 20px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+  .post {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .post img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .post-content {
+    padding: 15px;
+  }
+
+  .post h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #222;
+  }
+
+  .post p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.4;
+  }
+
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+        position: relative;
+    }
+    
+    /* Ensure all containers are constrained */
+    .header, nav, .nav-links, .text-box {
+        width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    /* Fix text overflow */
+    .text-box h1 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+        overflow-wrap: break-word;
+        padding: 0 15px;
+    }
+    
+    /* Fix image overflow */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Fix navigation padding */
+    nav {
+        padding: 20px 15px;
+    }
+}
+            
+
+    
+            .header {
+                min-height: 100vh;
+                
+                background-position: center;
+                background-size: cover;
+            }
+            .header { position: relative; }
+.nav-links { z-index: 999; }
+    
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 50px;
+            }
+            nav { z-index: 2; }
+.header { z-index: 0; }
+@media (max-width: 768px) {
+    .header {
+        overflow-x: hidden;
+    }
+    
+    nav {
+        width: 100%;
+        overflow: visible;
+    }
+}
+    
+            .nav-links {
+                flex: 1;
+                text-align: right;
+            }
+    
+            .nav-links ul {
+                display: flex;
+                justify-content: flex-end;
+                list-style: none;
+            }
+    
+            .nav-links ul li {
+                margin: 0 15px;
+            }
+    
+            .nav-links ul li a {
+                color: white;
+                text-decoration: none;
+                font-size: 16px;
+            }
+    
+            .fa-bars {
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                display: none;
+            }
+    
+            /* Mobile View Styles */
+            @media (max-width: 768px) {
+                nav {
+                    padding: 20px;
+                }
+                
+                .nav-links {
+                    position: fixed;
+                    top: 0;
+                    right: -200px;
+                    height: 100vh;
+                    width: 200px;
+                    background: rgba(0,0,0,0.9);
+                    backdrop-filter: blur(5px);
+                    transition: right 0.3s ease;
+                    z-index: 999;
+                    padding-top: 60px;
+                }
+    
+                .nav-links.active {
+                    right: 0;
+                }
+    
+                .nav-links ul {
+                    display: block;
+                    text-align: left;
+                    padding: 0 20px;
+                }
+    
+                .nav-links ul li {
+                    margin: 25px 0;
+                }
+    
+                .fa-bars {
+                    display: block;
+                    z-index: 1000;
+                }
+    
+                .fa-times {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    color: white;
+                    font-size: 24px;
+                    cursor: pointer;
+                }
+            }
+    
+            /* Desktop View - No Changes */
+            @media (min-width: 769px) {
+                .nav-links {
+                    display: block !important;
+                }
+                .fa-bars {
+                    display: none !important;
+                }
+            }
+    
+            /* Existing content styles */
+            .text-box {
+                color: white;
+                padding: 100px 50px;
+                text-align: center;
+            }
+            .hero-btn {
+                display: inline-block;
+                padding: 12px 34px;
+                color: white;
+                border: 1px solid white;
+                text-decoration: none;
+                margin-top: 20px;
+            }
+        </style>
+        
+        
+
+
+        
+
+
+    </head>
+    
+
+    <body class="gradient-bg" data-aos="fade-up">
+        <section class="header">
+            <nav>
+                <a href="index.html"><img src="images/Logo.jpg" alt="Logo"></a>
+                <div class="nav-links" id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="about.html">ABOUT</a></li>       
+                        <li><a href="course.html">COURSE</a></li>
+                        <li><a href="blog.html">BLOG</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
+                        <li><a href="login.html">Login for admin</a></li>
+                    </ul>
+                </div>
+                <i class="fa fa-bars" onclick="showMenu()"></i>
+            </nav>
+    
+            <div class="text-box">
+                <h1> नेपाल देखी <span > दुबई कतार  </span> 10 देखी 15 दिनमै  </h1>
+                <p> वैदेशिक रोजगारिको लागि भर्पर्दो मेनपावर कम्पनिको खोजीमा हुनुहुन्छ भने हामिलाई सम्जनुहोला सम्पर्क को लागि <br /> 
+                    9764575701/9767548941 कृष्ण प्रसाद खतिवडा
+                </p>
+                <a href="contact.html" class="hero-btn">Visit us to know more</a>
+            </div>
+        </section>
+        <div>
+            <h2>Gallery</h2>
+  <div id="gallery"></div>
+        </div>
+
+    <section class = "course" data-aos="fade-up">
+        <h1> हामीले प्रदान गर्ने पाठ्यक्रमहरू तपाईंको व्यक्तिगत प्राथमिकता अनुसार धेरै फरक हुन सक्छन्। थप विवरणहरू चाँडै आउँदैछन्।</h1>
+        <p> Course we offer can very so much according to your personal prefences and I will add more details to follow for the courses</p>
+        <div class="row">
+            <div class="course-col">
+                <h3>Cleaning</h3>
+                <p>
+                    काम गर्दा ध्यान दिनुपर्ने कुराहरूको लागि हामी सुरुदेखि नै प्रदान गर्दछौं।
+                </p>
+            </div>
+            <div class="course-col">
+                <h3>Housekeeping</h3>
+                <p>
+                    काम गर्दा ध्यान दिनुपर्ने कुराहरूको लागि हामी सुरुदेखि नै प्रदान गर्दछौं।
+                </p>
+            </div>
+            <div class="course-col">
+                <h3>Security</h3>
+                <p>
+                    काम गर्दा ध्यान दिनुपर्ने कुराहरूको लागि हामी सुरुदेखि नै प्रदान गर्दछौं।
+                </p>
+            </div>
+    
+    
+        </div>
+    
+        <section class="Facilities" data-aos="fade-up">
+            <h1>Our Facilities</h1>
+            <p><b>हामी मानिसहरूलाई असाधारण सुविधाहरू प्रदान गर्ने ठाउँमा तपाईंहरू सबैलाई स्वागत छ।</b><br><br>
+    
+            <div class="row">
+                <div class="facilities-col">
+                    <img src="images/qatardriver.jpg" >
+                    <h3>Training Center</h3>
+                    <p>ट्रेनिङ्ग केन्द्रले वैदेशिक रोजगारीको लागि आवश्यक सबै आधारभूत कुराहरू प्रदान गर्दछ।</p>
+                </div>
+                <div class="facilities-col">
+                    <img src="images/Going-abroad-Feb16.jpg" >
+                    <h3>Visa Provide for foreign employment</h3>
+                    <p>वैदेशिक रोजगारका लागि भिसा प्रदान</p>
+                </div>
+                <div class="facilities-col">
+                    <img src="images/1745546644732.jpg" >
+                    <h3>Motivation and Counselling</h3>
+                    <p>प्रेरणा र परामर्श, वैदेशिक रोजगारको लागि उत्प्रेरित गर्ने र उचित मार्गदर्शन दिने उद्देश्यले।</p>
+                </div>
+            </div>
+        </section>
+    <section class="campus" data-aos="fade-up">
+        <h1>Our Global Institute</h1>
+        <p>Our Global Institure is huge and contains many things available for physical and mental growth of every people trying for manpower  </p>
+
+        <div class="row">
+            <div class="campus-col">
+                <img src="images/ai2.jpg">
+                <div class="layer">
+                    <h3>work</h3>
+                </div>
+            </div>
+            <div class="campus-col">
+                <img src="images/aiiii.jpg">
+                <div class="layer">
+                    <h3>News and all</h3>
+                </div>
+            </div>
+            <div class="campus-col">
+                <img src="images/ai4.jpg">
+                <div class="layer">
+                    <h3>Program work</h3>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="testomonials" data-aos="fade-up">
+        <h1>Our support</h1>
+        <p> <strong>Here</strong> <br>Krishna Khatiwada</p></section><br>
+        <div class="row">
+            <div class="testomonials-col">
+                <img src="images/qatardriver.jpg" >
+                <div>
+                    <p>
+                        प्रेरणा र परामर्श, वैदेशिक रोजगारको लागि उत्प्रेरित गर्ने र उचित मार्गदर्शन दिने उद्देश्यले।</p></br>
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <section class="cta" data-aos="fade-up">
+        <h1>Enroll for our various Courses Anywhere from the world</h1>
+        <a href="contact.html" class="hero-btn">CONTACT US</a>
+
+
+    </section>
+    <div class="content-col">
+        <form action="http://localhost:5000/send" method="post">
+          <input type="text" name="name" placeholder="Enter Your Name" required>
+          <input type="email" name="email" placeholder="Enter Email address" required>
+          <input type="text" name="subject" placeholder="Enter Your Subject" required>
+          <textarea rows="8" name="message" placeholder="Message" required></textarea>
+          <button type="submit" class="hero-btn red-btn">Send Message</button>
+        </form>
+      
+        <i class="fa fa-facebook"></i>
+      </div>
+
+    <section class="footer" data-aos="fade-up">
+        <h4>About Us    </h4>
+        <p> "That's what unions do. They can get money, they can get support, they can get manpower.." </br></p>
+        
+        
+
+        </div>
+        <div class="icons">
+            <a href="https://www.facebook.com/amarss.edu.np" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/your-instagram-account" target="_blank"><i class="fab fa-instagram"></i></a>
+            <!-- Add other social media icons if needed -->
+        </div>
+        
+        <p>You can also contact us on facebook <i class="fa-facebook"> </i></p>
+    </section>
+
+
+
+
+
+    <script>
+        const navLinks = document.getElementById("navLinks");
+
+        function showMenu() {
+            navLinks.classList.add('active');
+        }
+
+        function hideMenu() {
+            navLinks.classList.remove('active');
+        }
+
+        // Close menu when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth <= 768) {
+                const isClickInside = navLinks.contains(event.target);
+                const isHamburger = event.target.closest('.fa-bars');
+                
+                if (!isClickInside && !isHamburger) {
+                    hideMenu();
+                }
+            }
+        });
+
+        // Reset menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                hideMenu();
+            }
+        });
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+
+    </script>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+  fetchPosts();
+});
+
+function fetchPosts() {
+  fetch('/api/posts')
+    .then(res => res.json())
+    .then(posts => {
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = ''; // clear previous content
+
+      posts.forEach(post => {
+        const postElement = document.createElement('div');
+        postElement.className = 'post';
+
+        postElement.innerHTML = `
+  <img src="${post.photo}" alt="${post.title}">
+  <div class="post-content">
+    <h3>${post.title}</h3>
+    <p>${post.description}</p>
+  </div>
+`;
+
+        gallery.appendChild(postElement);
+      });
+    })
+    .catch(err => {
+      console.error('Error loading posts:', err);
+    });
+}
+
+    
+    </script>
+
+    </body>
+    </html> 
