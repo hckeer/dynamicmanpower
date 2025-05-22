@@ -7,6 +7,8 @@ const path = require('path');
 const multer = require('multer')
 const fs = require('fs')
 const Post = require('./models/Post')
+const cors = require('cors')
+app.use(cors())
 
 // Create an Express app
 const app = express();
