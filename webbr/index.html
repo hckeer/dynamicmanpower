@@ -385,7 +385,7 @@
 
     </section>
     <div class="content-col">
-        <form action="https://dynamicmanpower.onrender.com/send" method="post">
+        <form action="/send" method="post">
           <input type="text" name="name" placeholder="Enter Your Name" required>
           <input type="email" name="email" placeholder="Enter Email address" required>
           <input type="text" name="subject" placeholder="Enter Your Subject" required>
@@ -458,7 +458,7 @@
 });
 
 function fetchPosts() {
-  fetch('/api/posts')
+  fetch('https://dynamicmanpower.onrender.com/api/posts')
     .then(res => res.json())
     .then(posts => {
       const gallery = document.getElementById('gallery');

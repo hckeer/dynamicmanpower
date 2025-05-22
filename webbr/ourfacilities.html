@@ -153,7 +153,7 @@
 });
 
 function fetchPosts() {
-  fetch('/api/posts')
+  fetch('https://dynamicmanpower.onrender.com/api/posts')
     .then(res => res.json())
     .then(posts => {
       const gallery = document.getElementById('gallery');
