@@ -7,7 +7,7 @@ const path = require('path');
 const multer = require('multer')
 const fs = require('fs')
 const Post = require('./models/Post')
-
+const nodemailer = require('nodemailer')
 
 
 // Create an Express app
@@ -25,7 +25,9 @@ const uploadDir = path.join(__dirname, '  uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
-app.use(express.urlencoded({ extended: false}));
+app.use(express.urlencoded({ extended: true}));
+
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -130,17 +132,59 @@ const Contact = mongoose.model('Contact', contactSchema);
 // POST route to handle form submission
 app.post('/api/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
-  
+
+  console.log("Received form submission:", req.body);
+
   const newContact = new Contact({ name, email, subject, message });
-  
-  
+
   try {
     await newContact.save();
-    res.status(200).send('Message received!');
+    console.log("Contact saved to MongoDB");
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'aayam.neupane1@gmail.com',
+        pass: 'sdia oway wuxq ulrx',
+      },
+    });
+
+    // Verify transporter config (debug)
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error("Transporter setup error:", error);
+      } else {
+        console.log("Transporter is ready to send emails");
+      }
+    });
+
+    const mailOptions = {
+      from: `"Dynamic Manpower" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
+      subject: `New Contact Form Submission: ${subject}`,
+      text: `
+        Name: ${name}
+        Email: ${email}
+        Subject: ${subject}
+        Message: ${message}
+      `,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log("Email sent successfully");
+      res.status(200).send('Message received and email notification sent!');
+    } catch (emailErr) {
+      console.error("Failed to send email:", emailErr.response || emailErr.message);
+      res.status(500).send('Message saved but email failed to send.');
+    }
+
   } catch (err) {
+    console.error('Error saving message:', err.message);
     res.status(500).send('Error saving message');
   }
-}); 
+});
+    
 
 app.get('/login', async ( req, res) => {
   res.sendFile(path.join(__dirname, '../webbr/login.html'))
