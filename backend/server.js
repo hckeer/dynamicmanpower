@@ -12,16 +12,16 @@ const Post = require('./models/Post')
 
 // Create an Express app
 const app = express();
-const uploadFolder = path.join(__dirname, '../webbr/uploads');
+const uploadFolder = path.join(__dirname, '../uploads');
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../webbr')));
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('../uploads', express.static(path.join(__dirname, '../uploads')));
 
 
-const uploadDir = path.join(__dirname, '../uploads');
+const uploadDir = path.join(__dirname, '  uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -42,6 +42,7 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage });
+app.use('/uploads', express.static(uploadDir));
 app.post('/api/upload', upload.single('profileImage'), async (req, res) => {
   try {
     console.log('Received upload request');
@@ -50,7 +51,11 @@ app.post('/api/upload', upload.single('profileImage'), async (req, res) => {
     console.log('File:', req.file);
 
     const { title, description } = req.body;
-    const photo = req.file ? '/uploads/' + req.file.filename : null;
+    const photo = req.file
+  ? `https://dynamicmanpower.onrender.com/uploads/${req.file.filename}`
+  : null;
+
+    
 
     if (!title || !description || !photo) {
       console.log('Validation failed: missing field');
@@ -145,6 +150,9 @@ app.get('/facilities', async ( req, res) => {
   res.sendFile(path.join(__dirname, '../webbr/ourfacilities.html'))
 }
 )
+
+
+
 
 
 // Start server
